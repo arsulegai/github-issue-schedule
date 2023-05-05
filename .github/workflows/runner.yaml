@@ -1,0 +1,23 @@
+name: Run and trigger the workflow
+
+on:
+  schedule:
+    - cron: 0 1 * * *
+  workflow_dispatch:
+
+jobs:
+  build:
+    permissions:
+      issues: write
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Generate latest release information
+      run: |
+            # Run the docker-compose command
+            docker-compose -f deployments/docker-compose.yaml up
+            exit ${?}
+      shell: bash
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
