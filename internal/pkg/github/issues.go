@@ -17,9 +17,9 @@ import (
 func (p *ProjectInstance) CreateIssue(schedule configs.Schedule) error {
 	ghClient := p.client.Client
 	issueRequest := github.IssueRequest{
-		Title:    &schedule.Title,
-		Body:     &schedule.Description,
-		Assignee: &p.project.Maintainers,
+		Title:     &schedule.Title,
+		Body:      &schedule.Description,
+		Assignees: &p.project.Maintainers,
 	}
 	issue, response, err := ghClient.Issues.Create(p.client.Context, p.project.GitHubOrg, p.project.GitHubRepo, &issueRequest)
 	if err != nil {

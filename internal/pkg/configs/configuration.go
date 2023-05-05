@@ -19,7 +19,7 @@ type Project struct {
 	Name        string     `yaml:"name"`
 	GitHubOrg   string     `yaml:"github_org"`
 	GitHubRepo  string     `yaml:"github_repo"`
-	Maintainers string     `yaml:"maintainers"`
+	Maintainers []string   `yaml:"maintainers"`
 	Schedules   []Schedule `yaml:"schedules"`
 }
 
