@@ -1,0 +1,6 @@
+name: 'GitHub Issue Schedule'
+description: 'Schedule create GitHub issues'
+author: 'Arun'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
