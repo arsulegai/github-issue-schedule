@@ -1,10 +1,14 @@
 name: Run and trigger the workflow
 
 on:
+  schedule:
+    - cron: 0 1 * * *
   workflow_dispatch:
 
 jobs:
   build:
+    permissions:
+      issues: write
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -16,4 +20,4 @@ jobs:
             exit ${?}
       shell: bash
       env:
-        GITHUB_TOKEN: "${{ secrets.PAT }}"
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

@@ -1,11 +1,11 @@
 buffer_window_days: 7
 projects:
   - name: Hyperledger Bevel
-    github_org: hyperledger
-    github_repo: bevel
+    github_org: arsulegai
+    github_repo: github-issue-schedule
     maintainers:
       - arsulegai
     schedules:
-      - date: 2023-05-12
+      - date: 2023-05-13
         title: Submit the 2023 Q3 quarterly report
         description: Dear Bevel maintainers, please submit the 2023 Q3 report.

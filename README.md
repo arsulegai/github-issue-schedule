@@ -18,7 +18,7 @@ This sign off means you agree the commit satisfies the
 [Developer Certificate of Origin(DCO)](https://developercertificate.org/).
 
 ### Build
- 
+
 `Makefile` is provided to ease up the development, and auto-perform lint
 checks as well as run tests if any. This is to maintain a good quality on
 the codebase.

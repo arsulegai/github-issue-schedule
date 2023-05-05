@@ -56,6 +56,8 @@ func main() {
 			// number of days from today to the actual schedule
 			numberOfDays := int(differenceTime.Hours() / 24)
 
+			log.Printf("current: %v requested: %v", currentTime, requestedTime)
+
 			// do not proceed if the current time is way past the schedule
 			// reminder
 			if currentTime.After(requestedTime) {
@@ -63,6 +65,8 @@ func main() {
 				// more schedules
 				continue
 			}
+
+			log.Printf("difference: %v configured: %v", numberOfDays, config.BufferWindowDays)
 
 			// found a case where action is needed
 			if uint8(numberOfDays) == config.BufferWindowDays {
