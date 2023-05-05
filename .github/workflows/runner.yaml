@@ -1,0 +1,19 @@
+name: Run and trigger the workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Generate latest release information
+      run: |
+            # Run the docker-compose command
+            docker-compose -f docker/docker-compose.yaml up
+            exit ${?}
+      shell: bash
+      env:
+        GITHUB_TOKEN: "${{ secrets.PAT }}"
