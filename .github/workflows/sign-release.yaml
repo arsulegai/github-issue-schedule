@@ -1,0 +1,54 @@
+name: Sign and release the container image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    permissions:
+      id-token: write
+      contents: read
+      packages: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Step 3: Log in to GitHub Container Registry
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 4: Build and push Docker image
+      - name: Read version from file
+        id: get_version
+        run: echo "version=$(cat VERSION)" >> $GITHUB_ENV
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository }}:${{ env.version }}
+
+      # Step 5: Get the latest release of cosign github action
+      - uses: sigstore/cosign-installer@v3.7.0
+
+      # Step 6: Use GitHub's OIDC token
+      - name: Keyless sign the Docker image
+        run: |
+          version=${{ env.version }}
+          cosign sign --yes ghcr.io/${{ github.repository }}:${{ env.version }} \
+            --oidc-issuer https://token.actions.githubusercontent.com
