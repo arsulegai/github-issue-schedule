@@ -1,0 +1,31 @@
+name: Verify signed container image
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: 'Release Version'
+        required: true
+        default: "1.0"
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Get the latest release of cosign github action
+      - uses: sigstore/cosign-installer@v3.7.0
+
+      # Step 3: Verify the container image
+      - name: Verifying the signed image
+        env:
+          version: "${{ github.event.inputs.releaseVersion }}"
+        run: |
+          cosign verify ghcr.io/${{ github.repository }}:${version} \
+            --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+            --certificate-identity "https://github.com/${{ github.repository }}/.github/workflows/sign-release.yaml@refs/heads/main"
