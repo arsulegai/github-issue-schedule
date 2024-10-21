@@ -1,5 +1,7 @@
 # GitHub Issue Schedule
 
+![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/arsulegai/github-issue-schedule/badge)
+
 Create issues to project repositories as per the scheduled
 configuration.
 
